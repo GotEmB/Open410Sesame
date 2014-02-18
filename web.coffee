@@ -9,13 +9,12 @@ expressServer.configure ->
 	expressServer.use express.bodyParser()
 	expressServer.use expressServer.router
 
-server = http.createServer expressServer
-
-server.get "/voice-inbound", (req, res, next) ->
+expressServer.get "/voice-inbound", (req, res, next) ->
 	ret = new tropo.TropoWebAPI
 	ret.say "Hello, 410."
 	res.send tropo.TropoJSON ret
 
-server.get "/text-inbound", (req, res, next) ->
+expressServer.get "/text-inbound", (req, res, next) ->
 
+server = http.createServer expressServer
 server.listen (port = process.env.PORT ? 5080), -> console.log "Listening on port #{port}"
