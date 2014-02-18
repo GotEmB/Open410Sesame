@@ -1,6 +1,7 @@
 http = require "http"
 express = require "express"
 tropo = require "tropo-webapi"
+allowed = require "./whitelist.json"
 
 expressServer = express()
 expressServer.configure ->
@@ -17,7 +18,13 @@ expressServer.post "/voice-inbound", (req, res, next) ->
 expressServer.get "/key9.wav", (req, res, next) ->
 	res.sendfile "key9.wav"
 
-# expressServer.post "/text-inbound", (req, res, next) ->
+expressServer.post "/text-inbound", (req, res, next) ->
+	instance = new tropo.TropoWebAPI
+	if req.param.from.id in allowed.numbers
+		instance.say "Access the gate within a minute."
+	else
+		instance.say "Not allowed"
+	res.send TropoJSON tropo
 
 server = http.createServer expressServer
 server.listen (port = process.env.PORT ? 5080), -> console.log "Listening on port #{port}"
