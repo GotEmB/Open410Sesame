@@ -14,10 +14,13 @@ expressServer.configure ->
 	expressServer.use expressServer.router
 
 expressServer.post "/voice-inbound", (req, res, next) ->
+	console.log "Gate called from #{req.body.session.from.id}."
 	instance = new tropo.TropoWebAPI
 	if currentState
-		instance.say "https://github.com/tropo/pre-recorded_audio_library/raw/master/DTMF%20Tones/Dtmf-9.wav"
+		console.log "Gate unlocked."
+		instance.say whitelist.correctResponse
 	else
+		console.log "Passcode requested."
 		say = new Say "Please enter the passcode."
 		choices = new Choices "[#{allowed.passcode.length} DIGITS]", "dtmf"
 		instance.ask choices, 3, true, null, "passcode", null, true, say, 5, null
@@ -27,8 +30,10 @@ expressServer.post "/voice-inbound", (req, res, next) ->
 expressServer.post "/voice-passcode", (req, res, next) ->
 	instance = new tropo.TropoWebAPI
 	if req.body.result?.actions?.name is "passcode" and req.body.result?.actions?.value is allowed.passcode
-		instance.say "https://github.com/tropo/pre-recorded_audio_library/raw/master/DTMF%20Tones/Dtmf-9.wav"
+		console.log "Passcode correct and gate unlocked."
+		instance.say whitelist.correctResponse
 	else
+		console.log "Entered passcode wrong."
 		instance.say "Sorry, wrong passcode."
 	res.send tropo.TropoJSON instance
 
