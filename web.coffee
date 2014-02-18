@@ -25,15 +25,13 @@ expressServer.post "/voice-inbound", (req, res, next) ->
 	res.send tropo.TropoJSON instance
 
 expressServer.post "/voice-passcode", (req, res, next) ->
+	console.log req
 	instance = new tropo.TropoWebAPI
 	if req.param("passcode") is allowed.passcode
 		instance.say "https://github.com/tropo/pre-recorded_audio_library/raw/master/DTMF%20Tones/Dtmf-9.wav"
 	else
 		instance.say "Sorry, wrong passcode."
 	res.send tropo.TropoJSON instance
-
-expressServer.get "/key9.wav", (req, res, next) ->
-	res.sendfile "key9.wav"
 
 expressServer.post "/text-inbound", (req, res, next) ->
 	instance = new tropo.TropoWebAPI
