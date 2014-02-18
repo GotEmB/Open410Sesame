@@ -11,7 +11,7 @@ expressServer.configure ->
 
 expressServer.post "/voice-inbound", (req, res, next) ->
 	ret = new tropo.TropoWebAPI
-	ret.say "   http://open410sesame.herokuapp.com/key9.wav"
+	ret.say "Hello, 4 1 0. http://open410sesame.herokuapp.com/key9.wav"
 	res.send tropo.TropoJSON ret
 
 expressServer.get "/key9.wav", (req, res, next) ->
