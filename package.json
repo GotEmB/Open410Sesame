@@ -1,0 +1,21 @@
+{
+	"name": "Open410Sesame",
+	"version": "0.0.0",
+	"description": "Open410Sesame",
+	"main": "web.coffee",
+	"dependencies": {
+		"express": "~3.4.8",
+		"tropo-webapi": "~1.0.16",
+		"coffee-script": "~1.7.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/GotEmB/Open410Sesame.git"
+	},
+	"author": "Gautham Badhrinathan (b.gautham@gmail.com)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/GotEmB/Open410Sesame/issues"
+	},
+	"homepage": "https://github.com/GotEmB/Open410Sesame"
+}
