@@ -12,7 +12,7 @@ expressServer.configure ->
 expressServer.get "/voice-inbound", (req, res, next) ->
 	ret = new tropo.TropoWebAPI
 	ret.say "Hello, 410."
-	res.send tropo.TropoJSON ret
+	res.json tropo.TropoJSON ret
 
 expressServer.get "/text-inbound", (req, res, next) ->
 
