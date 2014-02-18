@@ -19,9 +19,9 @@ expressServer.get "/key9.wav", (req, res, next) ->
 	res.sendfile "key9.wav"
 
 expressServer.post "/text-inbound", (req, res, next) ->
-	console.log req.param, "\n\n", req
+	console.log req.param("session")
 	instance = new tropo.TropoWebAPI
-	if req.param.from.id in allowed.numbers
+	if req.body.session.from.id in allowed.numbers
 		instance.say "Access the gate within a minute."
 	else
 		instance.say "Not allowed"
