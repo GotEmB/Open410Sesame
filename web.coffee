@@ -16,9 +16,20 @@ expressServer.configure ->
 expressServer.post "/voice-inbound", (req, res, next) ->
 	instance = new tropo.TropoWebAPI
 	if currentState
-		instance.say "Hello, 4 1 0. https://github.com/tropo/pre-recorded_audio_library/raw/master/DTMF%20Tones/Dtmf-9.wav"
+		instance.say "https://github.com/tropo/pre-recorded_audio_library/raw/master/DTMF%20Tones/Dtmf-9.wav"
 	else
-		instance.say "Sorry, Bye Bye."
+		say = new Say "Please enter the passcode."
+		choices = new Choices "[#{allowed.passcode.length} DIGITS]", "dtmf"
+		instance.ask choices, 3, true, null, "passcode", null, true, say, 5, null
+		instance.on "continue", null, "/voice-passcode", true
+	res.send tropo.TropoJSON instance
+
+expressServer.post "/voice-passcode", (req, res, next) ->
+	instance = new tropo.TropoWebAPI
+	if req.param("passcode") is allowed.passcode
+		instance.say "https://github.com/tropo/pre-recorded_audio_library/raw/master/DTMF%20Tones/Dtmf-9.wav"
+	else
+		instance.say "Sorry, wrong passcode."
 	res.send tropo.TropoJSON instance
 
 expressServer.get "/key9.wav", (req, res, next) ->
