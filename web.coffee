@@ -15,7 +15,7 @@ expressServer.post "/voice-inbound", (req, res, next) ->
 	res.send tropo.TropoJSON ret
 
 expressServer.get "/key9.wav", (req, res, next) ->
-	res.sendFile "key9.wav"
+	res.sendfile "key9.wav"
 
 # expressServer.post "/text-inbound", (req, res, next) ->
 
