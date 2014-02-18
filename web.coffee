@@ -25,7 +25,7 @@ expressServer.post "/voice-inbound", (req, res, next) ->
 	res.send tropo.TropoJSON instance
 
 expressServer.post "/voice-passcode", (req, res, next) ->
-	console.log req.body.result?.actions?.passcode
+	console.log req.body.result?.actions
 	console.log allowed.passcode
 	instance = new tropo.TropoWebAPI
 	if req.body.result?.actions?.passcode?.value is allowed.passcode
